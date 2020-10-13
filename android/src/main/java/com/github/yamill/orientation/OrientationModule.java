@@ -29,10 +29,11 @@ import javax.annotation.Nullable;
 
 public class OrientationModule extends ReactContextBaseJavaModule implements LifecycleEventListener{
     final BroadcastReceiver receiver;
-
+    final ReactApplicationContext ctx;
+    
     public OrientationModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        final ReactApplicationContext ctx = reactContext;
+        ctx = reactContext;
 
         receiver = new BroadcastReceiver() {
             @Override
