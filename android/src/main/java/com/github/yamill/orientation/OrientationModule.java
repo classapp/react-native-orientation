@@ -108,7 +108,6 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
 
     @ReactMethod
     public void unlockAllOrientations() {
-        final ContentResolver resolver = ctx.getContentResolver();
         boolean rotateLock = android.provider.Settings.System.getInt(resolver,android.provider.Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
      
         final Activity activity = getCurrentActivity();
