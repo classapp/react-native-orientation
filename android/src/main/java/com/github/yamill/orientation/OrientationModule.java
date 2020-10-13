@@ -115,7 +115,7 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
         boolean rotateLock = android.provider.Settings.System.getInt(resolver,android.provider.Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
      
         final Activity activity = getCurrentActivity();
-        if (activity == null || rotateLock) {
+        if (activity == null || !rotateLock) {
             return;
         }
 
