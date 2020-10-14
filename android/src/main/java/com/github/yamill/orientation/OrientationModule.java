@@ -39,7 +39,7 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
             @Override
             public void onReceive(Context context, Intent intent) {
                 Configuration newConfig = intent.getParcelableExtra("newConfig");
-                Log.d("receiver", String.valueOf(newConfig.orientation));
+                Log.d("receiverOri", String.valueOf(newConfig.orientation));
 
                 String orientationValue = newConfig.orientation == 1 ? "PORTRAIT" : "LANDSCAPE";
 
@@ -112,14 +112,14 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
     @ReactMethod
     public void unlockAllOrientations() {
         final ContentResolver resolver = ctx.getContentResolver();
-        boolean rotateLock = android.provider.Settings.System.getInt(resolver,android.provider.Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
-     
+        Boolean rotateLock = android.provider.Settings.System.getInt(resolver,android.provider.Settings.System.ACCELEROMETER_ROTATION, 0) == 1;
+        
         final Activity activity = getCurrentActivity();
         if (activity == null || !rotateLock) {
             return;
         }
 
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
     }
 
     @Override
@@ -159,6 +159,7 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
         }
         activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
     }
+
     @Override
     public void onHostPause() {
         final Activity activity = getCurrentActivity();
