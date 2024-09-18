@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.util.Log;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -157,7 +158,11 @@ public class OrientationModule extends ReactContextBaseJavaModule implements Lif
             FLog.e(ReactConstants.TAG, "no activity to register receiver");
             return;
         }
-        activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
+        if(Build.VERSION.SDK_INT >= 34 && activity.getApplicationInfo().targetSdkVersion >= 34) {
+           activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"), Context.RECEIVER_EXPORTED);
+       } else {
+           activity.registerReceiver(receiver, new IntentFilter("onConfigurationChanged"));
+       }
     }
 
     @Override
